@@ -80,6 +80,8 @@ function addItem(id, x=null, y=null, sayWord=true){
   const el = document.createElement("button");
   el.className = "placed-item";
   el.dataset.id = item.id;
+  el.dataset.scale = "1.35";
+  el.style.setProperty("--item-scale", el.dataset.scale);
   el.innerHTML = `${pictureHTML(item.id)}<span class="item-word">${item.word}</span>`;
 
   const inner = dropZone.querySelector(".box-inner");
@@ -97,6 +99,8 @@ function addItem(id, x=null, y=null, sayWord=true){
     e.stopPropagation();
     speak(item.word);
   });
+
+  el.addEventListener("wheel", resizeWithWheel, { passive:false });
 
   placedItems.appendChild(el);
   emptyHint.style.display = "none";
@@ -125,6 +129,32 @@ function deleteSelected(){
   deleteBtn.disabled = true;
   feedback.textContent = "Item removed.";
   if(!placedItems.children.length) emptyHint.style.display = "";
+}
+
+
+function resizeWithWheel(e){
+  e.preventDefault();
+  e.stopPropagation();
+
+  const el = e.currentTarget;
+  selectItem(el);
+
+  let scale = parseFloat(el.dataset.scale || "1.35");
+  const step = 0.12;
+
+  if(e.deltaY < 0){
+    scale += step;
+  }else{
+    scale -= step;
+  }
+
+  scale = Math.max(0.65, Math.min(3.0, scale));
+  scale = Math.round(scale * 100) / 100;
+
+  el.dataset.scale = String(scale);
+  el.style.setProperty("--item-scale", scale);
+
+  feedback.textContent = `Size: ${Math.round(scale * 100)}%`;
 }
 
 function placeAt(el,x,y){
@@ -191,7 +221,10 @@ document.getElementById("resetBtn").addEventListener("click",()=>{
 
 document.getElementById("saveBtn").addEventListener("click",()=>{
   const saved=[...placedItems.children].map(el=>({
-    id:el.dataset.id,left:el.style.left,top:el.style.top
+    id:el.dataset.id,
+    left:el.style.left,
+    top:el.style.top,
+    scale:el.dataset.scale || "1.35"
   }));
   localStorage.setItem("stationeryBoxLayout",JSON.stringify(saved));
   feedback.textContent="Saved on this device. 💾";
@@ -212,6 +245,8 @@ document.getElementById("loadBtn").addEventListener("click",()=>{
     const el=document.createElement("button");
     el.className="placed-item";
     el.dataset.id=item.id;
+    el.dataset.scale=s.scale || "1.35";
+    el.style.setProperty("--item-scale", el.dataset.scale);
     el.innerHTML=`${pictureHTML(item.id)}<span class="item-word">${item.word}</span>`;
     el.style.left=s.left;
     el.style.top=s.top;
@@ -226,6 +261,7 @@ document.getElementById("loadBtn").addEventListener("click",()=>{
       e.stopPropagation();
       speak(item.word);
     });
+    el.addEventListener("wheel", resizeWithWheel, { passive:false });
 
     placedItems.appendChild(el);
   });

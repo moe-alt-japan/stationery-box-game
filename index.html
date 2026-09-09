@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stationery Box Game</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <div>
+        <h1>Stationery Box Game</h1>
+        <p class="jp">文房具を箱に入れよう！</p>
+      </div>
+
+      <div class="challenge-panel" aria-live="polite">
+        <span class="challenge-label">Challenge</span>
+        <strong id="challengeText">Put the pencil in the box.</strong>
+        <button id="speakBtn" class="icon-btn" title="Hear the sentence" aria-label="Hear the sentence">🔊</button>
+      </div>
+    </header>
+
+    <section class="game-layout">
+      <section class="play-area">
+        <div id="dropZone" class="box" tabindex="0" aria-label="Stationery box drop area">
+          <div class="box-inner">
+            <p id="emptyHint">Drag or tap an item to put it in the box.</p>
+            <div id="placedItems" class="placed-items"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="resetBtn" class="control-btn">↻ Reset</button>
+          <button id="saveBtn" class="control-btn">💾 Save</button>
+          <button id="loadBtn" class="control-btn">📂 Load</button>
+          <button id="nextBtn" class="control-btn primary">Next Challenge ▶</button>
+        </div>
+
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+      </section>
+
+      <aside class="item-panel">
+        <h2>Choose an item</h2>
+        <div id="itemGrid" class="item-grid"></div>
+      </aside>
+    </section>
+  </main>
+
+  <template id="itemTemplate">
+    <button class="item-card" draggable="true">
+      <span class="item-icon" aria-hidden="true"></span>
+      <span class="item-word"></span>
+    </button>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>

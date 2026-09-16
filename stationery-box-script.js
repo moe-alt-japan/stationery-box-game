@@ -59,18 +59,12 @@ function renderPalette(){
     });
 
     card.addEventListener("click", ()=>addItem(item.id));
-    card.addEventListener("dblclick", ()=>speak(item.word));
     itemGrid.appendChild(card);
   });
 }
 
 function speak(text){
-  if(!("speechSynthesis" in window)) return;
-  speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = "en-US";
-  utter.rate = .9;
-  speechSynthesis.speak(utter);
+  // Sound disabled.
 }
 
 function addItem(id, x=null, y=null, sayWord=true){
@@ -100,14 +94,12 @@ function addItem(id, x=null, y=null, sayWord=true){
   });
   el.addEventListener("dblclick", e=>{
     e.stopPropagation();
-    speak(item.word);
   });
 
   el.addEventListener("wheel", resizeWithWheel, { passive:false });
 
   placedItems.appendChild(el);
   emptyHint.style.display = "none";
-  if(sayWord) speak(item.word);
 }
 
 function selectItem(el){
@@ -294,8 +286,7 @@ document.getElementById("loadBtn").addEventListener("click",()=>{
     });
     el.addEventListener("dblclick",e=>{
       e.stopPropagation();
-      speak(item.word);
-    });
+      });
     el.addEventListener("wheel", resizeWithWheel, { passive:false });
 
     placedItems.appendChild(el);

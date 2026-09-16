@@ -112,7 +112,7 @@ button{font:inherit}
   border:3px solid transparent;
   border-radius:14px;
   background:transparent;
-  transform:translate(-50%,-50%) scale(var(--item-scale,1.35));
+  transform:translate(-50%,-50%) rotate(var(--item-rotation,0deg)) scale(var(--item-scale,1.35));
   transform-origin:center center;
   user-select:none;
   touch-action:none;
@@ -137,14 +137,41 @@ button{font:inherit}
   height:70px;
 }
 
-.placed-item .item-word{
-  margin-top:2px;
-  background:rgba(255,255,255,.90);
-  border-radius:999px;
-  padding:1px 7px;
-  font-size:15px;
+/* Words stay in the right palette, but are hidden on items inside the box. */
+.placed-item .item-word{display:none;}
+
+.rotate-handle{
+  display:none;
+  position:absolute;
+  left:50%;
+  top:-28px;
+  width:28px;
+  height:28px;
+  transform:translateX(-50%);
+  border:2px solid #333;
+  border-radius:50%;
+  background:#fff;
+  font-size:20px;
+  line-height:22px;
   font-weight:700;
+  cursor:grab;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 4px rgba(0,0,0,.25);
+  z-index:3;
+  touch-action:none;
 }
+.rotate-handle::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:26px;
+  width:2px;
+  height:12px;
+  background:#555;
+  transform:translateX(-50%);
+}
+.placed-item.selected .rotate-handle{display:flex;}
 
 .controls{
   flex:0 0 auto;
@@ -280,4 +307,20 @@ button{font:inherit}
   .picture{width:58px;height:43px}
   .item-word{font-size:13px}
   .control-btn{padding:5px 10px;font-size:14px}
+}
+
+/* Irasutoya PNG artwork */
+.picture img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  pointer-events:none;
+  user-select:none;
+  -webkit-user-drag:none;
+  filter:drop-shadow(2px 3px 1px rgba(0,0,0,.14));
+}
+.placed-item .picture{
+  width:92px;
+  height:78px;
 }

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stationery Box Game</title>
+  <link rel="stylesheet" href="stationery-box-style.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <h1>Stationery Box Game</h1>
+      <p>文房具を箱に入れよう！</p>
+    </header>
+
+    <section class="game-layout">
+      <section class="play-area">
+        <div id="dropZone" class="box" aria-label="Stationery box">
+          <div class="box-inner">
+            <p id="emptyHint">Drag or tap an item to put it in the box.</p>
+            <div id="placedItems" class="placed-items"></div>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="resetBtn" class="control-btn">↻ Reset</button>
+          <button id="deleteBtn" class="control-btn danger" disabled>🗑 Delete Selected</button>
+          <button id="saveBtn" class="control-btn">💾 Save</button>
+          <button id="loadBtn" class="control-btn">📂 Load</button>
+        </div>
+
+        <div id="feedback" class="feedback" aria-live="polite"></div>
+      </section>
+
+      <aside class="item-panel">
+        <h2>Choose an item</h2>
+        <div id="itemGrid" class="item-grid"></div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="stationery-box-script.js"></script>
+</body>
+</html>
